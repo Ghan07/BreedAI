@@ -17,7 +17,7 @@ const app = express();
 
 // Security
 app.use(helmet({ crossOriginResourcePolicy: { policy: 'cross-origin' } }));
-app.use(cors({ origin: config.clientUrl, credentials: true }));
+app.use(cors({ origin: config.clientUrl.split(',').map(s => s.trim()), credentials: true }));
 app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 200, message: { success: false, message: 'Too many requests' } }));
 
 // Body parsing
