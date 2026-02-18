@@ -1,8 +1,10 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
+const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://breedai-api.onrender.com/api' : '/api');
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || '/api',
+  baseURL: API_URL,
   headers: { 'Content-Type': 'application/json' },
 });
 
