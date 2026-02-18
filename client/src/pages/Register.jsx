@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { User, Mail, Lock, Building2, Beef } from 'lucide-react';
+import { User, Mail, Lock, Building2 } from 'lucide-react';
+import BovisionLogo from '../components/common/BovisionLogo';
 import toast from 'react-hot-toast';
 import useAuthStore from '../stores/authStore';
 
@@ -33,11 +34,8 @@ const Register = () => {
     <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <motion.div className="w-full max-w-md" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center">
-              <Beef className="w-6 h-6 text-white" />
-            </div>
-            <span className="font-bold text-2xl text-gray-900 dark:text-white">AnimalATC</span>
+          <Link to="/" className="inline-flex mb-6">
+            <BovisionLogo size="lg" showTagline />
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create Account</h1>
           <p className="text-gray-500 mt-1">Start classifying livestock with AI</p>

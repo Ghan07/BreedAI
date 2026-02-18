@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { LayoutDashboard, ScanLine, History, Settings, LogOut, ChevronLeft, ChevronRight, Beef, Moon, Sun, Menu, X } from 'lucide-react';
+import { LayoutDashboard, ScanLine, History, Settings, LogOut, ChevronLeft, ChevronRight, Moon, Sun, Menu, X } from 'lucide-react';
+import BovisionLogo from '../common/BovisionLogo';
 import useAuthStore from '../../stores/authStore';
 import useThemeStore from '../../stores/themeStore';
 
@@ -23,11 +24,8 @@ const Sidebar = () => {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className="flex items-center gap-3 px-4 py-5 border-b border-gray-200 dark:border-gray-700">
-        <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center flex-shrink-0">
-          <Beef className="w-5 h-5 text-white" />
-        </div>
-        {!collapsed && <span className="font-bold text-lg text-gray-900 dark:text-white whitespace-nowrap">AnimalATC</span>}
+      <div className="px-4 py-5 border-b border-gray-200 dark:border-gray-700">
+        <BovisionLogo size="sm" collapsed={collapsed} />
       </div>
 
       {/* Nav */}

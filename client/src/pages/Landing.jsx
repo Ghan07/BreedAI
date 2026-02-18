@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ScanLine, Ruler, Brain, BarChart3, Shield, Zap, ArrowRight, Beef, Moon, Sun } from 'lucide-react';
+import { ScanLine, Ruler, Brain, BarChart3, Shield, Zap, ArrowRight, Moon, Sun } from 'lucide-react';
+import BovisionLogo from '../components/common/BovisionLogo';
 import { useAnimatedCounter } from '../hooks/useAnimatedCounter';
 import useThemeStore from '../stores/themeStore';
 
@@ -37,12 +38,7 @@ const Landing = () => {
     <div className="min-h-screen">
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 lg:px-12 py-4 border-b border-gray-200 dark:border-gray-800">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-primary-600 rounded-lg flex items-center justify-center">
-            <Beef className="w-5 h-5 text-white" />
-          </div>
-          <span className="font-bold text-xl text-gray-900 dark:text-white">AnimalATC</span>
-        </div>
+        <BovisionLogo size="md" showTagline />
         <div className="flex items-center gap-3">
           <button onClick={toggle} className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
             {dark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
@@ -147,7 +143,7 @@ const Landing = () => {
 
       {/* Footer */}
       <footer className="border-t border-gray-200 dark:border-gray-800 px-6 py-8 text-center text-sm text-gray-500">
-        <p>© 2024 AnimalATC. Image-Based Animal Type Classification System.</p>
+        <p>© 2024 Bovision AI. Image-Based Animal Type Classification System.</p>
       </footer>
     </div>
   );
