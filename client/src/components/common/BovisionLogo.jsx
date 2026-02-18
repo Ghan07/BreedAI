@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const BovisionLogo = ({ size = 'md', showTagline = false, collapsed = false, animate = true }) => {
+const BovisionLogo = ({ size = 'md', showTagline = false, collapsed = false, animate = true, hover = true }) => {
   const sizes = {
     sm: { icon: 36, text: 'text-lg', tagline: 'text-[9px]', gap: 'gap-2' },
     md: { icon: 40, text: 'text-xl', tagline: 'text-[10px]', gap: 'gap-2.5' },
@@ -11,18 +11,24 @@ const BovisionLogo = ({ size = 'md', showTagline = false, collapsed = false, ani
 
   const s = sizes[size] || sizes.md;
   const Wrapper = animate ? motion.div : 'div';
-  const wrapperProps = animate ? { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { duration: 0.5 } } : {};
+  const wrapperProps = animate
+    ? { initial: { opacity: 0, x: -10 }, animate: { opacity: 1, x: 0 }, transition: { duration: 0.5, ease: 'easeOut' } }
+    : {};
 
   return (
-    <Wrapper className={`flex items-center ${s.gap}`} {...wrapperProps}>
+    <Wrapper
+      className={`flex items-center ${s.gap} group cursor-pointer`}
+      {...wrapperProps}
+    >
       {/* Bovine head icon with digital eye */}
-      <svg
+      <motion.svg
         width={s.icon}
         height={s.icon}
         viewBox="0 0 64 64"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         className="flex-shrink-0"
+        whileHover={hover ? { rotate: [0, -5, 5, 0], transition: { duration: 0.4 } } : undefined}
       >
         <defs>
           <linearGradient id="bovision-blue" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -90,7 +96,9 @@ const BovisionLogo = ({ size = 'md', showTagline = false, collapsed = false, ani
             fill="url(#bovision-green)"
             opacity="0.3"
           />
-          <circle cx="24" cy="28" r="2.5" fill="url(#bovision-green)" />
+          <circle cx="24" cy="28" r="2.5" fill="url(#bovision-green)">
+            <animate attributeName="opacity" values="1;0.5;1" dur="2.5s" repeatCount="indefinite" />
+          </circle>
           <circle cx="24" cy="28" r="1" fill="white" opacity="0.9" />
           {/* Scan lines */}
           <line x1="20" y1="28" x2="28" y2="28" stroke="url(#bovision-green)" strokeWidth="0.5" opacity="0.5" />
@@ -104,7 +112,9 @@ const BovisionLogo = ({ size = 'md', showTagline = false, collapsed = false, ani
             fill="url(#bovision-green)"
             opacity="0.3"
           />
-          <circle cx="40" cy="28" r="2.5" fill="url(#bovision-green)" />
+          <circle cx="40" cy="28" r="2.5" fill="url(#bovision-green)">
+            <animate attributeName="opacity" values="1;0.5;1" dur="2.5s" repeatCount="indefinite" />
+          </circle>
           <circle cx="40" cy="28" r="1" fill="white" opacity="0.9" />
           {/* Scan lines */}
           <line x1="36" y1="28" x2="44" y2="28" stroke="url(#bovision-green)" strokeWidth="0.5" opacity="0.5" />
@@ -120,30 +130,41 @@ const BovisionLogo = ({ size = 'md', showTagline = false, collapsed = false, ani
         <line x1="32" y1="18" x2="32" y2="23" stroke="url(#bovision-green)" strokeWidth="0.8" opacity="0.4" />
         <line x1="28" y1="20" x2="32" y2="23" stroke="url(#bovision-green)" strokeWidth="0.8" opacity="0.4" />
         <line x1="36" y1="20" x2="32" y2="23" stroke="url(#bovision-green)" strokeWidth="0.8" opacity="0.4" />
-        <circle cx="32" cy="23" r="1.2" fill="url(#bovision-green)" opacity="0.6" />
-      </svg>
+        <circle cx="32" cy="23" r="1.2" fill="url(#bovision-green)" opacity="0.6">
+          <animate attributeName="r" values="1.2;2;1.2" dur="3s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0.6;1;0.6" dur="3s" repeatCount="indefinite" />
+        </circle>
+      </motion.svg>
 
       {/* Text */}
       {!collapsed && (
-        <div className="flex flex-col leading-none">
+        <motion.div
+          className="flex flex-col leading-none"
+          initial={animate ? { opacity: 0, x: -8 } : undefined}
+          animate={animate ? { opacity: 1, x: 0 } : undefined}
+          transition={{ duration: 0.5, delay: 0.15 }}
+        >
           <span className={`font-bold ${s.text} tracking-tight whitespace-nowrap`}>
-            <span className="bg-gradient-to-r from-blue-800 to-blue-400 bg-clip-text text-transparent dark:from-blue-400 dark:to-blue-300">
+            <span className="bg-gradient-to-r from-blue-800 to-blue-400 bg-clip-text text-transparent dark:from-blue-400 dark:to-blue-300 transition-all duration-300 group-hover:from-blue-700 group-hover:to-blue-300">
               Bovision
             </span>
             {' '}
-            <span className="bg-gradient-to-r from-emerald-500 to-emerald-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-emerald-500 to-emerald-300 bg-clip-text text-transparent transition-all duration-300 group-hover:from-emerald-400 group-hover:to-green-200">
               AI
             </span>
           </span>
           {showTagline && (
-            <span
+            <motion.span
               className={`${s.tagline} text-gray-400 dark:text-gray-500 tracking-wide mt-0.5 whitespace-nowrap`}
               style={{ fontFamily: "'Noto Sans Devanagari', sans-serif" }}
+              initial={animate ? { opacity: 0 } : undefined}
+              animate={animate ? { opacity: 1 } : undefined}
+              transition={{ duration: 0.6, delay: 0.4 }}
             >
               पशु दृष्टि बुद्धिः
-            </span>
+            </motion.span>
           )}
-        </div>
+        </motion.div>
       )}
     </Wrapper>
   );
