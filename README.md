@@ -1,4 +1,4 @@
-# AnimalATC - Image-Based Animal Type Classification
+# Bovision AI - पशु दृष्टि बुद्धिः [ Animal Vision Intelligence ] 
 
 AI-powered system for morphometric measurement and ATC scoring of cattle and buffaloes from side-view images.
 
