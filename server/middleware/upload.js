@@ -1,15 +1,16 @@
 import multer from 'multer';
-import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
+import { v2 as cloudinary } from 'cloudinary';
 import config from '../config/index.js';
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, 'uploads/'),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    cb(null, `${uuidv4()}${ext}`);
-  },
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: config.cloudinary.cloudName,
+  api_key: config.cloudinary.apiKey,
+  api_secret: config.cloudinary.apiSecret,
 });
+
+// Use memory storage — no disk writes
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
   const allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/jpg'];
@@ -25,3 +26,22 @@ export const upload = multer({
   fileFilter,
   limits: { fileSize: config.uploadMaxSize },
 });
+
+// Middleware to upload buffer to Cloudinary after multer processes it
+export const uploadToCloudinary = (req, res, next) => {
+  if (!req.file) return next();
+
+  const stream = cloudinary.uploader.upload_stream(
+    { folder: 'animal-classification', resource_type: 'image' },
+    (error, result) => {
+      if (error) return next(error);
+      // Attach cloudinary info to req.file so the controller can use it
+      req.file.cloudinary = result;
+      req.file.path = result.secure_url;
+      req.file.filename = result.public_id;
+      next();
+    }
+  );
+
+  stream.end(req.file.buffer);
+};
