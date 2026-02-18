@@ -143,7 +143,7 @@ const Landing = () => {
 
       {/* Footer */}
       <footer className="border-t border-gray-200 dark:border-gray-800 px-6 py-8 text-center text-sm text-gray-500">
-        <p>© 2024 Bovision AI. Image-Based Animal Type Classification System.</p>
+        <p>© 2026 Bovision AI. Image-Based Animal Type Classification System.</p>
       </footer>
     </div>
   );
