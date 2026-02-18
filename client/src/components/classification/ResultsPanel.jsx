@@ -38,11 +38,23 @@ const ResultsPanel = ({ result }) => {
             <h3 className="text-lg font-semibold mb-3 flex items-center gap-2 text-gray-900 dark:text-white">
               <FileText className="w-5 h-5 text-primary-500" /> Analyzed Image
             </h3>
-            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center min-h-[200px]">
-              <div className="text-center text-gray-500 dark:text-gray-400">
-                <Beef className="w-16 h-16 mx-auto mb-2 opacity-50" />
-                <p className="text-sm">{image.originalName}</p>
-                <p className="text-xs mt-1">{(image.size / 1024 / 1024).toFixed(2)} MB</p>
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden min-h-[200px]">
+              {image.path ? (
+                <img
+                  src={image.path}
+                  alt={image.originalName || 'Analyzed animal'}
+                  className="w-full h-auto max-h-[400px] object-contain"
+                />
+              ) : (
+                <div className="p-4 flex items-center justify-center h-full">
+                  <div className="text-center text-gray-500 dark:text-gray-400">
+                    <Beef className="w-16 h-16 mx-auto mb-2 opacity-50" />
+                    <p className="text-sm">{image.originalName}</p>
+                  </div>
+                </div>
+              )}
+              <div className="px-4 py-2 text-center border-t border-gray-200 dark:border-gray-600">
+                <p className="text-xs text-gray-500 dark:text-gray-400">{image.originalName} • {(image.size / 1024 / 1024).toFixed(2)} MB</p>
               </div>
             </div>
           </div>
