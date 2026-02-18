@@ -8,6 +8,8 @@ const userSchema = new mongoose.Schema({
   role: { type: String, enum: ['user', 'admin', 'researcher'], default: 'user' },
   organization: { type: String, trim: true, default: '' },
   avatar: { type: String, default: '' },
+  isDemo: { type: Boolean, default: false },
+  demoClassifications: { type: Number, default: 0 },
   settings: {
     darkMode: { type: Boolean, default: false },
     emailNotifications: { type: Boolean, default: true },

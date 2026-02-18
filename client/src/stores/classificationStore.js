@@ -44,7 +44,13 @@ const useClassificationStore = create((set) => ({
     try {
       const res = await classificationAPI.create(formData);
       set({ current: res.data.data });
-      return res.data.data;
+      return { success: true, data: res.data.data };
+    } catch (e) {
+      const resp = e.response?.data;
+      if (resp?.demoLimitReached) {
+        return { success: false, demoLimitReached: true, message: resp.message };
+      }
+      throw e;
     } finally {
       set({ classifying: false });
     }

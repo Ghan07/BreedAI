@@ -9,6 +9,7 @@ import connectDB from './config/db.js';
 import errorHandler from './middleware/errorHandler.js';
 import authRoutes from './routes/auth.js';
 import classificationRoutes from './routes/classifications.js';
+import { ensureDemoAccount } from './utils/seedDemo.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -48,6 +49,7 @@ app.use(errorHandler);
 
 const start = async () => {
   await connectDB();
+  await ensureDemoAccount();
   app.listen(config.port, () => console.log(`Server running on port ${config.port}`));
 };
 

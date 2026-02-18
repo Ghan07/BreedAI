@@ -1,12 +1,24 @@
 import Classification from '../models/Classification.js';
 import Image from '../models/Image.js';
 import Animal from '../models/Animal.js';
+import User from '../models/User.js';
 import { classifyAnimal } from '../services/classificationEngine.js';
 
 export const createClassification = async (req, res, next) => {
   try {
     if (!req.file) {
       return res.status(400).json({ success: false, message: 'Please upload an image' });
+    }
+
+    // Demo account limit: max 3 classifications
+    if (req.user.isDemo) {
+      if (req.user.demoClassifications >= 3) {
+        return res.status(403).json({
+          success: false,
+          message: 'Demo limit reached. Please create an account to continue classifying.',
+          demoLimitReached: true,
+        });
+      }
     }
 
     const image = await Image.create({
@@ -43,6 +55,11 @@ export const createClassification = async (req, res, next) => {
       processingTime,
       notes: req.body.notes || '',
     });
+
+    // Increment demo counter
+    if (req.user.isDemo) {
+      await User.findByIdAndUpdate(req.user._id, { $inc: { demoClassifications: 1 } });
+    }
 
     const populated = await Classification.findById(classification._id).populate('image').populate('animal');
 
